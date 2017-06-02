@@ -1,0 +1,18 @@
+{
+  "name": "booth-server",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^4.0.0",
+    "dropbox": "^2.5.4",
+    "express": "^4.15.3",
+    "express-fileupload": "^0.1.3",
+    "uuid": "^3.0.1"
+  }
+}
