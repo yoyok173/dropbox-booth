@@ -1,1 +1,39 @@
-hallo
+<!doctype html>
+<html>
+  <head>
+    <title>Upload</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.2/socket.io.js"></script>
+    <script
+      src="https://code.jquery.com/jquery-3.2.1.min.js"
+      integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+      crossorigin="anonymous"></script>
+    <script>
+      $(function () {
+        var socket = io()
+        socket.on('image_uploaded', (response) => {
+          $('#message').html('New file uploaded' + ' ' + JSON.stringify(response))
+        })
+
+        $('form').submit(function (e) {
+          $.ajax({
+            url: '/dropbox/hochzeit_benny',
+            type: 'POST',
+            data: new FormData(this),
+            processData: false,
+            contentType: false
+          });
+          e.preventDefault();
+
+          return false
+        })
+      })
+    </script>
+  </head>
+  <body>
+    <div id="message"></div>
+    <form>
+      <input type="file" name="image">
+      <button>Upload</button>
+    </form>
+  </body>
+</html>
