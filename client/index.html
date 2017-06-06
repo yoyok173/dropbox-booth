@@ -2,6 +2,8 @@
 <html>
   <head>
     <title>Upload</title>
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="client/style.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.2/socket.io.js"></script>
     <script
       src="https://code.jquery.com/jquery-3.2.1.min.js"
@@ -14,11 +16,14 @@
           $('#message').html('New file uploaded' + ' ' + JSON.stringify(response))
         })
 
-        $('form').submit(function (e) {
+        $('#fileupload').change(function (e) {
+          let formdata = new FormData()
+          formdata.append('image', e.target.files[0])
+
           $.ajax({
             url: '/dropbox/hochzeit_benny',
             type: 'POST',
-            data: new FormData(this),
+            data: formdata,
             processData: false,
             contentType: false
           });
@@ -30,10 +35,13 @@
     </script>
   </head>
   <body>
-    <div id="message"></div>
-    <form>
-      <input type="file" name="image">
-      <button>Upload</button>
-    </form>
+    <div class="container">
+      <h1>Hochzeits_Booth</h1>
+      <div id="message"></div>
+      <form class="upload">
+        <input type="file" name="image" id="fileupload">
+      </form>
+      <h2>upload_your_image</h2>
+    </div>
   </body>
 </html>

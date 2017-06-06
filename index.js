@@ -16,6 +16,10 @@ const channel = io(server)
 
 app.use(fileUpload())
 
+app.use(express.static(process.cwd(), {
+  maxage: 2592000000 // set max-cache to 30d
+}))
+
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, '/client/index.html'))
 })
