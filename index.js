@@ -7,6 +7,7 @@ const uuid = require('uuid/v4')
 const Dropbox = require('dropbox')
 const path = require('path')
 const auth = require('basic-auth')
+const imagick = require('imagemagick')
 
 dotenv.config()
 
@@ -60,16 +61,26 @@ app.get('/dropbox/:folder_path', (req, res) => {
 app.post('/dropbox/:folder_path', (req, res) => {
   let fileType = req.files.image.name.split('.')[req.files.image.name.split('.').length - 1]
 
-  dbx.filesUpload({
-    path: '/' + req.params.folder_path + '/' + uuid() + '.' + fileType,
-    contents: req.files.image.data
-  })
-  .then((response) => {
-    channel.emit('image_uploaded', response)
-    res.send(response)
-  })
-  .catch((error) => {
-    res.send(error)
+  imagick.resize({
+    srcData: req.files.image.data,
+    width: 1024
+  }, (err, stdout, stderr) => {
+    if (err) {
+      res.statusCode = 500
+      res.send(err)
+    }
+
+    dbx.filesUpload({
+      path: '/' + req.params.folder_path + '/' + uuid() + '.' + fileType,
+      contents: new Buffer(stdout, 'binary')
+    })
+    .then((response) => {
+      channel.emit('image_uploaded', response)
+      res.send(response)
+    })
+    .catch((error) => {
+      res.send(error)
+    })
   })
 })
 
