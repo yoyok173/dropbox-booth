@@ -36,10 +36,6 @@ body {
   width: 50vw;
 }
 
-.upload.success {
-    background-color: #8FD896;
-}
-
 .upload.loading {
   animation: in-out 1s infinite;
 }
