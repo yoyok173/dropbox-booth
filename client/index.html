@@ -13,12 +13,26 @@
       $(function () {
         var socket = io()
         socket.on('image_uploaded', (response) => {
-          $('#message').html('New file uploaded' + ' ' + JSON.stringify(response))
+          $('.upload').addClass('success')
+          $('.upload').removeClass('loading')
+          $('#fileupload').removeAttr('disabled')
+
+          setTimeout(()=>{
+            $('.upload').removeClass('success')
+          }, 3000)
         })
 
         $('#fileupload').change(function (e) {
           let formdata = new FormData()
-          formdata.append('image', e.target.files[0])
+          let file = e.target.files[0]
+          formdata.append('image', file)
+
+          if (!file) {
+            return
+          }
+
+          $('.upload').addClass('loading')
+          $('#fileupload').attr('disabled','disabled')
 
           $.ajax({
             url: '/dropbox/hochzeit_benny',
@@ -36,12 +50,9 @@
   </head>
   <body>
     <div class="container">
-      <h1>Hochzeits_Booth</h1>
-      <div id="message"></div>
       <form class="upload">
         <input type="file" name="image" id="fileupload">
       </form>
-      <h2>upload_your_image</h2>
     </div>
   </body>
 </html>
