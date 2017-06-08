@@ -24,7 +24,7 @@ app.use(express.static(process.cwd(), {
 app.use((req, res, next) => {
   let credentials = auth(req)
 
-  if (!credentials || credentials.name !== process.env.USER || credentials.pass !== process.env.PASSWORD) {
+  if (!credentials || credentials.name !== process.env.USERNAME || credentials.pass !== process.env.PASSWORD) {
     res.statusCode = 401
     res.setHeader('WWW-Authenticate', 'Basic realm="denied"')
     res.send('Access denied')
