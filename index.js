@@ -1,5 +1,6 @@
 const dotenv = require('dotenv')
 const express = require('express')
+const cors = require('cors')
 const http = require('http')
 const io = require('socket.io')
 const fileUpload = require('express-fileupload')
@@ -16,6 +17,7 @@ const app = express()
 const server = http.Server(app)
 const channel = io(server)
 
+app.use(cors())
 app.use(fileUpload())
 
 app.use(express.static(process.cwd(), {
