@@ -60,6 +60,14 @@ app.get('/dropbox/:folder_path', (req, res) => {
   })
 })
 
+app.get('/dropbox/:folder_path/:file_name', (req, res) => {
+  dbx.filesGetTemporaryLink({
+    path: '/' + req.params.folder_path + '/' + req.params.file_name
+  })
+  .then((response) => res.send(response))
+  .catch(res.send)
+})
+
 app.post('/dropbox/:folder_path', (req, res) => {
   let fileType = req.files.image.name.split('.')[req.files.image.name.split('.').length - 1]
 
