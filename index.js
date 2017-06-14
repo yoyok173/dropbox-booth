@@ -73,7 +73,7 @@ app.post('/dropbox/:folder_path', (req, res) => {
 
   imagick.resize({
     srcData: req.files.image.data,
-    width: 1024
+    width: 1920
   }, (err, stdout, stderr) => {
     if (err) {
       res.statusCode = 500
